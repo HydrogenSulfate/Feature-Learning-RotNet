@@ -74,15 +74,15 @@ dloader_test = CifarDataLoader(
 config['disp_step'] = args_opt.disp_step
 algorithm = getattr(alg, config['algorithm_type'])(config)
 # algorithm.random_single_forward()
-# algorithm._trans()
-algorithm._infer_static("inference.pdmodel", "inference.pdiparams")
-exit(0)
-if args_opt.cuda:  # enable cuda
-    algorithm.load_to_gpu()
-if args_opt.checkpoint > 0:  # load checkpoint
-    algorithm.load_checkpoint(args_opt.checkpoint, train=(not args_opt.evaluate))
+algorithm._trans()
+# algorithm._infer_static("inference.pdmodel", "inference.pdiparams")
+# exit(0)
+# if args_opt.cuda:  # enable cuda
+#     algorithm.load_to_gpu()
+# if args_opt.checkpoint > 0:  # load checkpoint
+#     algorithm.load_checkpoint(args_opt.checkpoint, train=(not args_opt.evaluate))
 
-if not args_opt.evaluate:  # train the algorithm
-    algorithm.solve(dloader_train, dloader_test)
-else:
-    algorithm.evaluate(dloader_test)  # evaluate the algorithm
+# if not args_opt.evaluate:  # train the algorithm
+#     algorithm.solve(dloader_train, dloader_test)
+# else:
+#     algorithm.evaluate(dloader_test)  # evaluate the algorithm
