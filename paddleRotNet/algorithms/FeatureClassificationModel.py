@@ -96,12 +96,15 @@ class FeatureClassificationModel(Algorithm):
         print(f"model (RotNet) has been already saved in (inference).")
 
     def save_pdparams(self):
+        self.feat_extractor.set_dict(paddle.load("./feat_extractor.pdparams"))
+        self.classifier.set_dict(paddle.load("./classifier.pdparams"))
         paddle.save(self.state_dict(), "inference.pdparams")
         print(f"save RotNet")
 
     def random_single_forward(
         self,
     ):
+        self.eval()
         self.feat_extractor.set_dict(paddle.load("./feat_extractor.pdparams"))
         self.classifier.set_dict(paddle.load("./classifier.pdparams"))
         import numpy as np
@@ -114,28 +117,10 @@ class FeatureClassificationModel(Algorithm):
         except:
             pass
 
-        # if do_train:  # zero the gradients
-        #     self.optimizers['classifier'].clear_grad()
-        #     if finetune_feat_extractor:
-        #         self.optimizers['feat_extractor'].clear_grad()
-        #     else:
-        #         self.networks['feat_extractor'].eval()
-        # import paddle.fluid as fluid
         import numpy as np
         dataX_var = dataX
-        # labels_var = labels
-        # print(f"out_feat_keys: {out_feat_keys}")
         pred_var = self(dataX_var)
-        # if not finetune_feat_extractor:
-        #     if isinstance(feat_var, (list, tuple)):
-        #         for i in range(len(feat_var)):
-        #             feat_var[i] = fluid.dygraph.to_variable(
-        #                 feat_var[i].numpy())
-        #     else:
-        #         feat_var = fluid.dygraph.to_variable(feat_var.numpy())
-        # pred_var = self.classifier(feat_var)
         print(pred_var)
-        # print(pred_var.shape)
 
     def save_pdparams(self):
         paddle.save(self.state_dict(), "inference.pdparams")

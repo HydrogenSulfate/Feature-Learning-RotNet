@@ -73,7 +73,7 @@ dloader_test = CifarDataLoader(
 
 config['disp_step'] = args_opt.disp_step
 algorithm = getattr(alg, config['algorithm_type'])(config)
-# algorithm.random_single_forward()
+algorithm.save_pdparams()
 algorithm._trans()
 # algorithm._infer_static("inference.pdmodel", "inference.pdiparams")
 # exit(0)
